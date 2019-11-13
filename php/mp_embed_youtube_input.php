@@ -21,13 +21,15 @@ $modContext = new stdClass();
 $modContext->id = uniqid();
 
 $modContext->videoSizes = array(
-    '420x315' => '420 x 315',
-    '480x360' => '480 x 360',
-    '640x480' => '640 x 480',
-    '960x720' => '960 x 720',
-    'custom' => mi18n("Custom")
+    '426x240' => '426 x 240',
+    '640x360' => '640 x 360',
+    '854x480' => '854 x 480',
+    '1280x720' => '1280 x 720',
+    '1920x1080' => '1920 x 1080',
+    '2560x1440' => '2560 x 1440',
+    '3840x2160' => '3840 x 2160',
+    'custom' => mi18n("CUSTOM")
 );
-
 
 // #################################################################################################
 // CMS VARIABLES &amp; LOGIC
@@ -80,10 +82,10 @@ $modContext->idResetOptions = "reset_options_" . $modContext->id;
 <table cellspacing="0" cellpadding="3" border="0" class="mpEmbedYouTube">
 
 <tr>
-    <td valign="top" class="text_medium_bold"><?php echo mi18n("Embed YouTube video") ?></td>
+    <td valign="top" class="text_medium_bold"><?php echo mi18n("EMBED_YOUTUBE_VIDEO") ?></td>
     <td class="text_medium">
         <!-- video url -->
-        <?php echo mi18n("Video URL") ?>:<br />
+        <?php echo mi18n("VIDEO_URL") ?>:<br />
         <input type="text" class="text_medium" style="width:300px;" name="<?php echo $modContext->cmsVarVideoUrl ?>" value="<?php echo $modContext->cmsValueVideoUrl ?>" /><br />
         <small>
         - http://www.youtube.com/watch?v=6jxsnIRpy2E
@@ -94,7 +96,7 @@ $modContext->idResetOptions = "reset_options_" . $modContext->id;
         <br />
 
         <!-- video size -->
-        <?php echo mi18n("Video Size") ?>:
+        <?php echo mi18n("VIDEO_SIZE") ?>:
         <div style="width:350px;">
             <select name="<?php echo $modContext->cmsVarVideoSize ?>" id="<?php echo $modContext->idVideoSize ?>" style="float:left;width:150px;margin-right:10px;">
             <?php
@@ -108,7 +110,7 @@ $modContext->idResetOptions = "reset_options_" . $modContext->id;
                 <input type="text" class="text_medium" style="width:50px;" name="<?php echo $modContext->cmsVarCustomWidth ?>" value="<?php echo $modContext->cmsValueCustomWidth ?>" />
                 x
                 <input type="text" class="text_medium" style="width:50px;" name="<?php echo $modContext->cmsVarCustomHeight ?>" value="<?php echo $modContext->cmsValueCustomHeight ?>" />
-                <small><?php echo mi18n("(W x H)") ?></small>
+                <small><?php echo mi18n("(W_x_H)") ?></small>
             </div>
             <div style="clear:both;"></div>
         </div>
@@ -116,19 +118,19 @@ $modContext->idResetOptions = "reset_options_" . $modContext->id;
 
         <!-- show suggested videos -->
         <input type="radio" name="<?php echo $modContext->cmsVarSuggestedVideos ?>" id="<?php echo $modContext->idSuggestedVideos ?>" value="1"<?php echo $modContext->cmsChkSuggestedVideos ?>>
-        <label for="<?php echo $modContext->idSuggestedVideos ?>"><?php echo mi18n("Show suggested videos when the video finishes") ?></label><br />
+        <label for="<?php echo $modContext->idSuggestedVideos ?>"><?php echo mi18n("SHOW_SUGGESTED_VIDEOS_WHEN_THE_VIDEO_FINISHES") ?></label><br />
 
         <!-- use https -->
         <input type="radio" name="<?php echo $modContext->cmsVarUseHttps ?>" id="<?php echo $modContext->idUseHttps ?>" value="1"<?php echo $modContext->cmsChkUseHttps ?>>
-        <label for="<?php echo $modContext->idUseHttps ?>"><?php echo mi18n("Use HTTPS") ?></label>
+        <label for="<?php echo $modContext->idUseHttps ?>"><?php echo mi18n("USE_HTTPS") ?></label>
         [<a href="http://www.google.com/support/youtube/bin/answer.py?answer=171780&amp;expand=UseHTTPS#HTTPS" class="blue" target="_blank"> ? </a>]<br />
 
         <!-- enable privacy-enhanced mode -->
         <input type="radio" name="<?php echo $modContext->cmsVarPrivacyMode ?>" id="<?php echo $modContext->idPrivacyMode ?>" value="1"<?php echo $modContext->cmsChkPrivacyMode ?>>
-        <label for="<?php echo $modContext->idPrivacyMode ?>"><?php echo mi18n("Enable privacy-enhanced mode") ?></label>
+        <label for="<?php echo $modContext->idPrivacyMode ?>"><?php echo mi18n("ENABLE_PRIVACY_ENHANCED_MODE") ?></label>
         [<a href="http://www.google.com/support/youtube/bin/answer.py?answer=171780&amp;expand=PrivacyEnhancedMode#privacy" class="blue" target="_blank"> ? </a>]<br />
 
-        <div style="margin-top:10px"><a href="#" class="blue" id="<?php echo $modContext->idResetOptions ?>"><?php echo mi18n("Reset options") ?></a></div>
+        <div style="margin-top:10px"><a href="#" class="blue" id="<?php echo $modContext->idResetOptions ?>"><?php echo mi18n("RESET_OPTIONS") ?></a></div>
     </td>
 </tr>
 

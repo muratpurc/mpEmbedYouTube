@@ -26,24 +26,27 @@ $modContext->debug = true;
 
 
 $modContext->videoSizes = array(
-    '420x315' => '420 x 315',
-    '480x360' => '480 x 360',
-    '640x480' => '640 x 480',
-    '960x720' => '960 x 720',
-    'custom' => mi18n("Custom")
+    '426x240' => '426 x 240',
+    '640x360' => '640 x 360',
+    '854x480' => '854 x 480',
+    '1280x720' => '1280 x 720',
+    '1920x1080' => '1920 x 1080',
+    '2560x1440' => '2560 x 1440',
+    '3840x2160' => '3840 x 2160',
+    'custom' => mi18n("CUSTOM")
 );
 
-$modContext->defaultDimensions = '420x315';
+$modContext->defaultDimensions = '426x240';
 $modContext->src = '';
 $modContext->video = '';
 $modContext->width = 0;
 $modContext->height = 0;
 $modContext->error = '';
-$modContext->errorMsgMissingInvalid = mi18n("Missing/Invalid YouTube video URL");
+$modContext->errorMsgMissingInvalid = mi18n("MSG_INVALID_YOUTUBE_VIDEO_URL");
 
 
 // #################################################################################################
-// CMS VARIABLES &amp; LOGIC
+// CMS VARIABLES & LOGIC
 
 $modContext->cmsValueVideoUrl = "CMS_VALUE[1]";
 
