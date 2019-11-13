@@ -6,5 +6,5 @@ MSG_INVALID_YOUTUBE_VIDEO_URL-=Missing/Invalid YouTube video URL
 RESET_OPTIONS=Reset options
 SHOW_SUGGESTED_VIDEOS_WHEN_THE_VIDEO_FINISHES=Show suggested videos when the video finishes
 USE_HTTPS=Use HTTPS
-VIDEO_SIZE=Video Size
+VIDEO_DIMENSIONS=Video dimensions
 VIDEO_URL=Video URL

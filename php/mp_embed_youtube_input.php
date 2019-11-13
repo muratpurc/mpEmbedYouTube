@@ -96,7 +96,7 @@ $modContext->idResetOptions = "reset_options_" . $modContext->id;
         <br />
 
         <!-- video size -->
-        <?php echo mi18n("VIDEO_SIZE") ?>:
+        <?php echo mi18n("VIDEO_DIMENSIONS") ?>:
         <div style="width:350px;">
             <select name="<?php echo $modContext->cmsVarVideoSize ?>" id="<?php echo $modContext->idVideoSize ?>" style="float:left;width:150px;margin-right:10px;">
             <?php
