@@ -24,7 +24,6 @@ $modContext->youTubeNoCookieUrl = 'http://www.youtube-nocookie.com/embed/';
 // (bool) Flag to display error message if an error occurs
 $modContext->debug = true;
 
-
 $modContext->videoSizes = array(
     '426x240' => '426 x 240',
     '640x360' => '640 x 360',
@@ -43,7 +42,7 @@ $modContext->width = 0;
 $modContext->height = 0;
 $modContext->error = '';
 $modContext->errorMsgMissingInvalid = mi18n("MSG_INVALID_YOUTUBE_VIDEO_URL");
-
+$modContext->urlParams = array();
 
 // #################################################################################################
 // CMS VARIABLES & LOGIC
@@ -74,6 +73,9 @@ $modContext->cmsValueUseHttps = ('1' == $modContext->cmsValueUseHttps) ? '1' : '
 
 $modContext->cmsValuePrivacyMode = "CMS_VALUE[7]";
 $modContext->cmsValuePrivacyMode = ('1' == $modContext->cmsValuePrivacyMode) ? '1' : '0';
+
+$modContext->cmsValuePlayerControls = "CMS_VALUE[8]";
+$modContext->cmsValuePlayerControls = ('1' == $modContext->cmsValuePlayerControls) ? '1' : '0';
 
 // Extract video id
 if (empty($modContext->cmsValueVideoUrl)) {
@@ -144,7 +146,16 @@ if (empty($modContext->error)) {
 
     // Suggested videos
     if ('1' !== $modContext->cmsValueSuggestedVideos) {
-        $modContext->src .= '?rel=0';
+        $modContext->urlParams['rel'] = '0';
+//        $modContext->src .= '?rel=0';
+    }
+
+    if ('1' !== $modContext->cmsValuePlayerControls) {
+        $modContext->urlParams['controls'] = '0';
+    }
+
+    if (count($modContext->urlParams) > 0) {
+        $modContext->src .= '?' . http_build_query($modContext->urlParams);
     }
 }
 

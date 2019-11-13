@@ -32,7 +32,7 @@ $modContext->videoSizes = array(
 );
 
 // #################################################################################################
-// CMS VARIABLES &amp; LOGIC
+// CMS VARIABLES & LOGIC
 
 $modContext->cmsValueVideoUrl = "CMS_VALUE[1]";
 $modContext->cmsVarVideoUrl = "CMS_VAR[1]";
@@ -69,6 +69,11 @@ $modContext->cmsVarPrivacyMode = "CMS_VAR[7]";
 $modContext->cmsChkPrivacyMode = ("1" == $modContext->cmsValuePrivacyMode) ? ' checked="checked"' : '';
 $modContext->idPrivacyMode = "privacy_mode_" . $modContext->id;
 
+$modContext->cmsValuePlayerControls = "CMS_VALUE[8]";
+$modContext->cmsVarPlayerControls = "CMS_VAR[8]";
+$modContext->cmsChkPlayerControls = ("1" == $modContext->cmsValuePlayerControls) ? ' checked="checked"' : '';
+$modContext->idPlayerControls = "player_controls_" . $modContext->id;
+
 $modContext->idResetOptions = "reset_options_" . $modContext->id;
 
 // #################################################################################################
@@ -77,7 +82,7 @@ $modContext->idResetOptions = "reset_options_" . $modContext->id;
 ?>
 
 <!-- load jQuery if not available -->
-<script>!window.jQuery &amp;&amp; document.write(unescape('%3Cscript src="scripts/jquery/jquery.js"%3E%3C/script%3E'))</script>
+<script>!window.jQuery && document.write(unescape('%3Cscript src="scripts/jquery/jquery.js"%3E%3C/script%3E'))</script>
 
 <table cellspacing="0" cellpadding="3" border="0" class="mpEmbedYouTube">
 
@@ -120,15 +125,19 @@ $modContext->idResetOptions = "reset_options_" . $modContext->id;
         <input type="radio" name="<?php echo $modContext->cmsVarSuggestedVideos ?>" id="<?php echo $modContext->idSuggestedVideos ?>" value="1"<?php echo $modContext->cmsChkSuggestedVideos ?>>
         <label for="<?php echo $modContext->idSuggestedVideos ?>"><?php echo mi18n("SHOW_SUGGESTED_VIDEOS_WHEN_THE_VIDEO_FINISHES") ?></label><br />
 
+        <!-- show player controls -->
+        <input type="radio" name="<?php echo $modContext->cmsVarPlayerControls ?>" id="<?php echo $modContext->idPlayerControls ?>" value="1"<?php echo $modContext->cmsChkPlayerControls ?>>
+        <label for="<?php echo $modContext->idPlayerControls ?>"><?php echo mi18n("SHOW_PLAYER_CONTROLS") ?></label><br />
+
         <!-- use https -->
         <input type="radio" name="<?php echo $modContext->cmsVarUseHttps ?>" id="<?php echo $modContext->idUseHttps ?>" value="1"<?php echo $modContext->cmsChkUseHttps ?>>
         <label for="<?php echo $modContext->idUseHttps ?>"><?php echo mi18n("USE_HTTPS") ?></label>
-        [<a href="http://www.google.com/support/youtube/bin/answer.py?answer=171780&amp;expand=UseHTTPS#HTTPS" class="blue" target="_blank"> ? </a>]<br />
+        [<a href="http://www.google.com/support/youtube/bin/answer.py?answer=171780&expand=UseHTTPS#HTTPS" class="blue" target="_blank"> ? </a>]<br />
 
         <!-- enable privacy-enhanced mode -->
         <input type="radio" name="<?php echo $modContext->cmsVarPrivacyMode ?>" id="<?php echo $modContext->idPrivacyMode ?>" value="1"<?php echo $modContext->cmsChkPrivacyMode ?>>
         <label for="<?php echo $modContext->idPrivacyMode ?>"><?php echo mi18n("ENABLE_PRIVACY_ENHANCED_MODE") ?></label>
-        [<a href="http://www.google.com/support/youtube/bin/answer.py?answer=171780&amp;expand=PrivacyEnhancedMode#privacy" class="blue" target="_blank"> ? </a>]<br />
+        [<a href="http://www.google.com/support/youtube/bin/answer.py?answer=171780&expand=PrivacyEnhancedMode#privacy" class="blue" target="_blank"> ? </a>]<br />
 
         <div style="margin-top:10px"><a href="#" class="blue" id="<?php echo $modContext->idResetOptions ?>"><?php echo mi18n("RESET_OPTIONS") ?></a></div>
     </td>
@@ -156,7 +165,7 @@ $modContext->idResetOptions = "reset_options_" . $modContext->id;
 
         // on reset options click
         $('#<?php echo $modContext->idResetOptions ?>').click(function(e) {
-            $.each(['#<?php echo $modContext->idSuggestedVideos ?>','#<?php echo $modContext->idUseHttps ?>','#<?php echo $modContext->idPrivacyMode ?>'], function(i, v) {
+            $.each(['#<?php echo $modContext->idSuggestedVideos ?>', '#<?php echo $modContext->idPlayerControls ?>', '#<?php echo $modContext->idUseHttps ?>', '#<?php echo $modContext->idPrivacyMode ?>'], function(i, v) {
                 $(v).removeAttr('checked');
             });
             return false;

@@ -8,3 +8,4 @@ SHOW_SUGGESTED_VIDEOS_WHEN_THE_VIDEO_FINISHES=Videovorschläge zeigen, nachdem d
 USE_HTTPS=HTTPS verwenden
 VIDEO_DIMENSIONS=Video Maße
 VIDEO_URL=Video URL
+SHOW_PLAYER_CONTROLS=Player Steuerung anzeigen
