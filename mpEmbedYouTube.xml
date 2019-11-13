@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<module><name>mpEmbedYouTube</name>
+<description>Modul zum Einbinden von YouTube Videos per iframe
+
+Autor: Murat Purc, murat@purc.de
+Version: 0.1</description>
+<type/>
+<input>?&gt;&lt;?php
+/**
+ * Module-Input: mpEmbedYouTube
+ *
+ * Module to embed YouTube videos in CONTENIDO
+ * See http://youtube.com/
+ *
+ * @package     CONTENIDO_Modules
+ * @subpackage  mpEmbedYouTube
+ * @author      Murat Purc &lt;murat@purc.de&gt;
+ * @copyright   Copyright (c) 2012 Murat Purc (http://www.purc.de)
+ * @license     http://www.gnu.org/licenses/gpl-2.0.html - GNU General Public License, version 2
+ * @version     $Id: $
+ */
+
+// #################################################################################################
+// INITIALIZATION
+
+$modContext = new stdClass();
+
+$modContext-&gt;id = uniqid();
+
+$modContext-&gt;videoSizes = array(
+    '420x315' =&gt; '420 x 315',
+    '480x360' =&gt; '480 x 360',
+    '640x480' =&gt; '640 x 480',
+    '960x720' =&gt; '960 x 720',
+    'custom' =&gt; mi18n(&quot;Custom&quot;)
+);
+
+
+// #################################################################################################
+// CMS VARIABLES &amp; LOGIC
+
+$modContext-&gt;cmsValueVideoUrl = &quot;CMS_VALUE[1]&quot;;
+$modContext-&gt;cmsVarVideoUrl = &quot;CMS_VAR[1]&quot;;
+
+$modContext-&gt;cmsValueVideoSize = &quot;CMS_VALUE[2]&quot;;
+$modContext-&gt;cmsVarVideoSize = &quot;CMS_VAR[2]&quot;;
+$modContext-&gt;idVideoSize = &quot;video_size_&quot; . $modContext-&gt;id;
+
+$modContext-&gt;idVideoCustomSize = &quot;video_custom_size_&quot; . $modContext-&gt;id;
+
+$modContext-&gt;cmsValueCustomWidth = &quot;CMS_VALUE[3]&quot;;
+$modContext-&gt;cmsVarCustomWidth = &quot;CMS_VAR[3]&quot;;
+
+$modContext-&gt;cmsValueCustomHeight = &quot;CMS_VALUE[4]&quot;;
+$modContext-&gt;cmsVarCustomHeight = &quot;CMS_VAR[4]&quot;;
+
+if ('custom' != $modContext-&gt;cmsValueVideoSize) {
+    $modContext-&gt;cmsValueCustomWidth = '';
+    $modContext-&gt;cmsValueCustomHeight = '';
+}
+
+$modContext-&gt;cmsValueSuggestedVideos = &quot;CMS_VALUE[5]&quot;;
+$modContext-&gt;cmsVarSuggestedVideos = &quot;CMS_VAR[5]&quot;;
+$modContext-&gt;cmsChkSuggestedVideos = (&quot;1&quot; == $modContext-&gt;cmsValueSuggestedVideos) ? ' checked=&quot;checked&quot;' : '';
+$modContext-&gt;idSuggestedVideos = &quot;suggested_videos_&quot; . $modContext-&gt;id;
+
+$modContext-&gt;cmsValueUseHttps = &quot;CMS_VALUE[6]&quot;;
+$modContext-&gt;cmsVarUseHttps = &quot;CMS_VAR[6]&quot;;
+$modContext-&gt;cmsChkUseHttps = (&quot;1&quot; == $modContext-&gt;cmsValueUseHttps) ? ' checked=&quot;checked&quot;' : '';
+$modContext-&gt;idUseHttps = &quot;use_https_&quot; . $modContext-&gt;id;
+
+$modContext-&gt;cmsValuePrivacyMode = &quot;CMS_VALUE[7]&quot;;
+$modContext-&gt;cmsVarPrivacyMode = &quot;CMS_VAR[7]&quot;;
+$modContext-&gt;cmsChkPrivacyMode = (&quot;1&quot; == $modContext-&gt;cmsValuePrivacyMode) ? ' checked=&quot;checked&quot;' : '';
+$modContext-&gt;idPrivacyMode = &quot;privacy_mode_&quot; . $modContext-&gt;id;
+
+$modContext-&gt;idResetOptions = &quot;reset_options_&quot; . $modContext-&gt;id;
+
+// #################################################################################################
+// OUTPUT
+
+?&gt;
+
+&lt;!-- load jQuery if not available --&gt;
+&lt;script&gt;!window.jQuery &amp;&amp; document.write(unescape('%3Cscript src=&quot;scripts/jquery/jquery.js&quot;%3E%3C/script%3E'))&lt;/script&gt;
+
+&lt;table cellspacing=&quot;0&quot; cellpadding=&quot;3&quot; border=&quot;0&quot; class=&quot;mpEmbedYouTube&quot;&gt;
+
+&lt;tr&gt;
+    &lt;td valign=&quot;top&quot; class=&quot;text_medium_bold&quot;&gt;&lt;?php echo mi18n(&quot;Embed YouTube video&quot;) ?&gt;&lt;/td&gt;
+    &lt;td class=&quot;text_medium&quot;&gt;
+        &lt;!-- video url --&gt;
+        &lt;?php echo mi18n(&quot;Video URL&quot;) ?&gt;:&lt;br /&gt;
+        &lt;input type=&quot;text&quot; class=&quot;text_medium&quot; style=&quot;width:300px;&quot; name=&quot;&lt;?php echo $modContext-&gt;cmsVarVideoUrl ?&gt;&quot; value=&quot;&lt;?php echo $modContext-&gt;cmsValueVideoUrl ?&gt;&quot; /&gt;&lt;br /&gt;
+        &lt;small&gt;
+        - http://www.youtube.com/watch?v=6jxsnIRpy2E
+          [&lt;a href=&quot;http://www.youtube.com/watch?v=6jxsnIRpy2E&quot; class=&quot;blue&quot; target=&quot;_blank&quot;&gt; ? &lt;/a&gt;]&lt;br /&gt;
+        - http://youtu.be/6jxsnIRpy2E
+          [&lt;a href=&quot;http://youtu.be/6jxsnIRpy2E&quot; class=&quot;blue&quot; target=&quot;_blank&quot;&gt; ? &lt;/a&gt;]
+        &lt;/small&gt;&lt;br /&gt;
+        &lt;br /&gt;
+
+        &lt;!-- video size --&gt;
+        &lt;?php echo mi18n(&quot;Video Size&quot;) ?&gt;:
+        &lt;div style=&quot;width:350px;&quot;&gt;
+            &lt;select name=&quot;&lt;?php echo $modContext-&gt;cmsVarVideoSize ?&gt;&quot; id=&quot;&lt;?php echo $modContext-&gt;idVideoSize ?&gt;&quot; style=&quot;float:left;width:150px;margin-right:10px;&quot;&gt;
+            &lt;?php
+            foreach ($modContext-&gt;videoSizes as $k =&gt; $v) {
+                $sel = ($modContext-&gt;cmsValueVideoSize == $k) ? ' selected=&quot;selected&quot;' : '';
+                echo '&lt;option value=&quot;' . $k . '&quot;' . $sel . '&gt;' . $v . '&lt;/option&gt;' . &quot;\n&quot;;
+            }
+            ?&gt;
+            &lt;/select&gt;
+            &lt;div id=&quot;&lt;?php echo $modContext-&gt;idVideoCustomSize ?&gt;&quot; style=&quot;float:left;width:175px;&quot;&gt;
+                &lt;input type=&quot;text&quot; class=&quot;text_medium&quot; style=&quot;width:50px;&quot; name=&quot;&lt;?php echo $modContext-&gt;cmsVarCustomWidth ?&gt;&quot; value=&quot;&lt;?php echo $modContext-&gt;cmsValueCustomWidth ?&gt;&quot; /&gt;
+                x
+                &lt;input type=&quot;text&quot; class=&quot;text_medium&quot; style=&quot;width:50px;&quot; name=&quot;&lt;?php echo $modContext-&gt;cmsVarCustomHeight ?&gt;&quot; value=&quot;&lt;?php echo $modContext-&gt;cmsValueCustomHeight ?&gt;&quot; /&gt;
+                &lt;small&gt;&lt;?php echo mi18n(&quot;(W x H)&quot;) ?&gt;&lt;/small&gt;
+            &lt;/div&gt;
+            &lt;div style=&quot;clear:both;&quot;&gt;&lt;/div&gt;
+        &lt;/div&gt;
+        &lt;br /&gt;
+
+        &lt;!-- show suggested videos --&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;&lt;?php echo $modContext-&gt;cmsVarSuggestedVideos ?&gt;&quot; id=&quot;&lt;?php echo $modContext-&gt;idSuggestedVideos ?&gt;&quot; value=&quot;1&quot;&lt;?php echo $modContext-&gt;cmsChkSuggestedVideos ?&gt;&gt;
+        &lt;label for=&quot;&lt;?php echo $modContext-&gt;idSuggestedVideos ?&gt;&quot;&gt;&lt;?php echo mi18n(&quot;Show suggested videos when the video finishes&quot;) ?&gt;&lt;/label&gt;&lt;br /&gt;
+
+        &lt;!-- use https --&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;&lt;?php echo $modContext-&gt;cmsVarUseHttps ?&gt;&quot; id=&quot;&lt;?php echo $modContext-&gt;idUseHttps ?&gt;&quot; value=&quot;1&quot;&lt;?php echo $modContext-&gt;cmsChkUseHttps ?&gt;&gt;
+        &lt;label for=&quot;&lt;?php echo $modContext-&gt;idUseHttps ?&gt;&quot;&gt;&lt;?php echo mi18n(&quot;Use HTTPS&quot;) ?&gt;&lt;/label&gt;
+        [&lt;a href=&quot;http://www.google.com/support/youtube/bin/answer.py?answer=171780&amp;expand=UseHTTPS#HTTPS&quot; class=&quot;blue&quot; target=&quot;_blank&quot;&gt; ? &lt;/a&gt;]&lt;br /&gt;
+
+        &lt;!-- enable privacy-enhanced mode --&gt;
+        &lt;input type=&quot;radio&quot; name=&quot;&lt;?php echo $modContext-&gt;cmsVarPrivacyMode ?&gt;&quot; id=&quot;&lt;?php echo $modContext-&gt;idPrivacyMode ?&gt;&quot; value=&quot;1&quot;&lt;?php echo $modContext-&gt;cmsChkPrivacyMode ?&gt;&gt;
+        &lt;label for=&quot;&lt;?php echo $modContext-&gt;idPrivacyMode ?&gt;&quot;&gt;&lt;?php echo mi18n(&quot;Enable privacy-enhanced mode&quot;) ?&gt;&lt;/label&gt;
+        [&lt;a href=&quot;http://www.google.com/support/youtube/bin/answer.py?answer=171780&amp;expand=PrivacyEnhancedMode#privacy&quot; class=&quot;blue&quot; target=&quot;_blank&quot;&gt; ? &lt;/a&gt;]&lt;br /&gt;
+
+        &lt;div style=&quot;margin-top:10px&quot;&gt;&lt;a href=&quot;#&quot; class=&quot;blue&quot; id=&quot;&lt;?php echo $modContext-&gt;idResetOptions ?&gt;&quot;&gt;&lt;?php echo mi18n(&quot;Reset options&quot;) ?&gt;&lt;/a&gt;&lt;/div&gt;
+    &lt;/td&gt;
+&lt;/tr&gt;
+
+&lt;/table&gt;
+&lt;script type=&quot;text/javascript&quot;&gt;
+(function($) {
+    $(document).ready(function() {
+        var $custom = $('#&lt;?php echo $modContext-&gt;idVideoCustomSize ?&gt;');
+
+        var _toggleCustom = function(selectedValue) {
+            if ('custom' == selectedValue) {
+                $custom.show();
+            } else {
+                $custom.hide();
+            }
+        };
+
+        // on video size select change
+        $('#&lt;?php echo $modContext-&gt;idVideoSize ?&gt;').change(function(e) {
+            var value = $(this).find(&quot;option:selected&quot;).attr(&quot;value&quot;);
+            _toggleCustom(value);
+        });
+
+        // on reset options click
+        $('#&lt;?php echo $modContext-&gt;idResetOptions ?&gt;').click(function(e) {
+            $.each(['#&lt;?php echo $modContext-&gt;idSuggestedVideos ?&gt;','#&lt;?php echo $modContext-&gt;idUseHttps ?&gt;','#&lt;?php echo $modContext-&gt;idPrivacyMode ?&gt;'], function(i, v) {
+                $(v).removeAttr('checked');
+            });
+            return false;
+        });
+
+        // initial custom sizes state
+        _toggleCustom('&lt;?php echo $modContext-&gt;cmsValueVideoSize ?&gt;');
+    });
+})(jQuery);
+&lt;/script&gt;
+
+&lt;?php
+
+unset($modContext);</input>
+<output>&lt;?php
+/**
+ * Module-Output: mpEmbedYouTube
+ *
+ * Module to embed YouTube videos in CONTENIDO
+ * See http://youtube.com/
+ *
+ * @package     CONTENIDO_Modules
+ * @subpackage  mpEmbedYouTube
+ * @author      Murat Purc &lt;murat@purc.de&gt;
+ * @copyright   Copyright (c) 2012 Murat Purc (http://www.purc.de)
+ * @license     http://www.gnu.org/licenses/gpl-2.0.html - GNU General Public License, version 2
+ * @version     $Id: $
+ */
+
+// #################################################################################################
+// INITIALIZATION
+
+$modContext = new stdClass();
+
+$modContext-&gt;youTubeUrl = 'http://www.youtube.com/embed/';
+$modContext-&gt;youTubeNoCookieUrl = 'http://www.youtube-nocookie.com/embed/';
+
+// (bool) Flag to display error message if an error occurs
+$modContext-&gt;debug = true;
+
+
+$modContext-&gt;videoSizes = array(
+    '420x315' =&gt; '420 x 315',
+    '480x360' =&gt; '480 x 360',
+    '640x480' =&gt; '640 x 480',
+    '960x720' =&gt; '960 x 720',
+    'custom' =&gt; mi18n(&quot;Custom&quot;)
+);
+
+$modContext-&gt;defaultDimensions = '420x315';
+$modContext-&gt;src = '';
+$modContext-&gt;video = '';
+$modContext-&gt;width = 0;
+$modContext-&gt;height = 0;
+$modContext-&gt;error = '';
+$modContext-&gt;errorMsgMissingInvalid = mi18n(&quot;Missing/Invalid YouTube video URL&quot;);
+
+
+// #################################################################################################
+// CMS VARIABLES &amp; LOGIC
+
+$modContext-&gt;cmsValueVideoUrl = &quot;CMS_VALUE[1]&quot;;
+
+$modContext-&gt;cmsValueVideoSize = &quot;CMS_VALUE[2]&quot;;
+if (!isset($modContext-&gt;videoSizes[$modContext-&gt;cmsValueVideoSize])) {
+    $modContext-&gt;cmsValueVideoSize = $modContext-&gt;defaultDimensions;
+}
+
+$modContext-&gt;cmsValueCustomWidth = &quot;CMS_VALUE[3]&quot;;
+$modContext-&gt;cmsValueCustomWidth = (int) $modContext-&gt;cmsValueCustomWidth;
+
+$modContext-&gt;cmsValueCustomHeight = &quot;CMS_VALUE[4]&quot;;
+$modContext-&gt;cmsValueCustomHeight = (int) $modContext-&gt;cmsValueCustomHeight;
+
+if ('custom' != $modContext-&gt;cmsValueVideoSize) {
+    $modContext-&gt;cmsValueCustomWidth = 0;
+    $modContext-&gt;cmsValueCustomHeight = 0;
+}
+
+$modContext-&gt;cmsValueSuggestedVideos = &quot;CMS_VALUE[5]&quot;;
+$modContext-&gt;cmsValueSuggestedVideos = ('1' == $modContext-&gt;cmsValueSuggestedVideos) ? '1' : '0';
+
+$modContext-&gt;cmsValueUseHttps = &quot;CMS_VALUE[6]&quot;;
+$modContext-&gt;cmsValueUseHttps = ('1' == $modContext-&gt;cmsValueUseHttps) ? '1' : '0';
+
+$modContext-&gt;cmsValuePrivacyMode = &quot;CMS_VALUE[7]&quot;;
+$modContext-&gt;cmsValuePrivacyMode = ('1' == $modContext-&gt;cmsValuePrivacyMode) ? '1' : '0';
+
+// Extract video id
+if (empty($modContext-&gt;cmsValueVideoUrl)) {
+    $modContext-&gt;error = $modContext-&gt;errorMsgMissingInvalid . ' [1]';
+} else {
+    $urlComp = @parse_url(htmlspecialchars($modContext-&gt;cmsValueVideoUrl));
+    if (!is_array($urlComp) || empty($urlComp['host'])) {
+        $modContext-&gt;error = $modContext-&gt;errorMsgMissingInvalid . ' [2]';
+    } else {
+        // Check for youtu.be url
+        if ('youtu.be' == $urlComp['host']) {
+            if (empty($urlComp['path'])) {
+                $modContext-&gt;error = $modContext-&gt;errorMsgMissingInvalid . ' [3]';
+            } else {
+                $modContext-&gt;video = str_replace('/', '', $urlComp['path']);
+            }
+        } else {
+            // Check for regular youtube url with 'v' parameter
+            if (empty($urlComp['query'])) {
+                $modContext-&gt;error = $modContext-&gt;errorMsgMissingInvalid . ' [4]';
+            } else {
+                $params = null;
+                @parse_str($urlComp['query'], $params);
+                if (!is_array($params) || empty($params['v'])) {
+                    $modContext-&gt;error = $modContext-&gt;errorMsgMissingInvalid . ' [5]';
+                } else {
+                     $modContext-&gt;video = $params['v'];
+                }
+            }
+        }
+    }
+}
+
+if (empty($modContext-&gt;video)) {
+    $modContext-&gt;error = $modContext-&gt;errorMsgMissingInvalid . ' [6]';
+}
+
+if (empty($modContext-&gt;error)) {
+    // Video dimensions
+    if ('custom' != $modContext-&gt;cmsValueVideoSize) {
+        $dimensions = explode('x', $modContext-&gt;cmsValueVideoSize);
+    } else {
+        $dimensions = array($modContext-&gt;cmsValueCustomWidth, $modContext-&gt;cmsValueCustomHeight);
+    }
+    if (!is_array($dimensions) || count($dimensions) !== 2) {
+        $dimensions = explode('x', $modContext-&gt;defaultDimensions);
+    } elseif ((int) $dimensions[0] &lt;= 0 || (int) $dimensions[1] &lt;= 0) {
+        $dimensions = explode('x', $modContext-&gt;defaultDimensions);
+    }
+
+    $modContext-&gt;width = (int) $dimensions[0];
+    $modContext-&gt;height = (int) $dimensions[1];
+
+    // Base URL
+    if ('1' == $modContext-&gt;cmsValuePrivacyMode) {
+        $modContext-&gt;src = $modContext-&gt;youTubeNoCookieUrl;
+    } else {
+        $modContext-&gt;src = $modContext-&gt;youTubeUrl;
+    }
+
+    // HTTPS
+    if ('1' == $modContext-&gt;cmsValueUseHttps) {
+        $modContext-&gt;src = str_replace('http://', 'https://', $modContext-&gt;src);
+    }
+
+    // Video id
+    $modContext-&gt;src .= $modContext-&gt;video;
+
+    // Suggested videos
+    if ('1' !== $modContext-&gt;cmsValueSuggestedVideos) {
+        $modContext-&gt;src .= '?rel=0';
+    }
+}
+
+
+// #################################################################################################
+// OUTPUT
+
+?&gt;
+
+&lt;div class=&quot;mpEmbedYouTube&quot;&gt;
+    &lt;?php if ($modContext-&gt;error) : ?&gt;
+        &lt;?php if (true == $modContext-&gt;debug) : ?&gt;
+
+            &lt;p&gt;&lt;strong&gt;mpEmbedYouTube error&lt;/strong&gt;: &lt;?php echo $modContext-&gt;error ?&gt;.&lt;/p&gt;
+
+        &lt;?php endif; ?&gt;
+    &lt;?php else : ?&gt;
+
+        &lt;iframe width=&quot;&lt;?php echo $modContext-&gt;width ?&gt;&quot; height=&quot;&lt;?php echo $modContext-&gt;height ?&gt;&quot; src=&quot;&lt;?php echo $modContext-&gt;src ?&gt;&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;
+
+    &lt;?php endif; ?&gt;
+
+&lt;/div&gt;
+
+&lt;?php
+
+unset($modContext);
+
+?&gt;</output>
+</module>
