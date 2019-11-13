@@ -1,0 +1,24 @@
+{
+    "name": "purcaholic/mp-embed-youtube",
+    "type": "contenido-cms-module",
+    "description": "YouTube video embed module for CONTENIDO CMS",
+    "keywords": [
+        "CONTENIDO",
+        "module",
+        "youtube",
+        "video",
+        "embed"
+    ],
+    "homepage": "http://www.purc.de",
+    "authors": [
+        {
+            "name": "Murat Purç",
+            "email": "murat@purc.de",
+            "role": "Developer"
+        }
+    ],
+    "license": ["GPL-2.0-or-later"],
+    "require-dev": {
+        "phpcompatibility/php-compatibility": "^9.3"
+    }
+}
