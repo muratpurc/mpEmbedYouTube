@@ -12,13 +12,13 @@
  * @license     http://www.gnu.org/licenses/gpl-2.0.html - GNU General Public License, version 2
  */
 
-// #################################################################################################
+// ##############################################
 // INITIALIZATION
 
 $modContext = new stdClass();
 
-$modContext->youTubeUrl = 'http://www.youtube.com/embed/';
-$modContext->youTubeNoCookieUrl = 'http://www.youtube-nocookie.com/embed/';
+$modContext->youTubeUrl = 'https://www.youtube.com/embed/';
+$modContext->youTubeNoCookieUrl = 'https://www.youtube-nocookie.com/embed/';
 
 // (bool) Flag to display error message if an error occurs
 $modContext->debug = true;
@@ -43,7 +43,7 @@ $modContext->error = '';
 $modContext->errorMsgMissingInvalid = mi18n("MSG_INVALID_YOUTUBE_VIDEO_URL");
 $modContext->urlParams = array();
 
-// #################################################################################################
+// ##############################################
 // CMS VARIABLES & LOGIC
 
 $modContext->cmsValueVideoUrl = "CMS_VALUE[1]";
@@ -59,7 +59,7 @@ $modContext->cmsValueCustomWidth = (int) $modContext->cmsValueCustomWidth;
 $modContext->cmsValueCustomHeight = "CMS_VALUE[4]";
 $modContext->cmsValueCustomHeight = (int) $modContext->cmsValueCustomHeight;
 
-if ('custom' != $modContext->cmsValueVideoSize) {
+if ($modContext->cmsValueVideoSize !== 'custom') {
     $modContext->cmsValueCustomWidth = 0;
     $modContext->cmsValueCustomHeight = 0;
 }
@@ -67,8 +67,8 @@ if ('custom' != $modContext->cmsValueVideoSize) {
 $modContext->cmsValueSuggestedVideos = "CMS_VALUE[5]";
 $modContext->cmsValueSuggestedVideos = ('1' == $modContext->cmsValueSuggestedVideos) ? '1' : '0';
 
-$modContext->cmsValueUseHttps = "CMS_VALUE[6]";
-$modContext->cmsValueUseHttps = ('1' == $modContext->cmsValueUseHttps) ? '1' : '0';
+$modContext->cmsValueUseHttp = "CMS_VALUE[6]";
+$modContext->cmsValueUseHttp = ('1' == $modContext->cmsValueUseHttp) ? '1' : '0';
 
 $modContext->cmsValuePrivacyMode = "CMS_VALUE[7]";
 $modContext->cmsValuePrivacyMode = ('1' == $modContext->cmsValuePrivacyMode) ? '1' : '0';
@@ -85,7 +85,7 @@ if (empty($modContext->cmsValueVideoUrl)) {
         $modContext->error = $modContext->errorMsgMissingInvalid . ' [2]';
     } else {
         // Check for youtu.be url
-        if ('youtu.be' == $urlComp['host']) {
+        if ('youtu.be' === $urlComp['host']) {
             if (empty($urlComp['path'])) {
                 $modContext->error = $modContext->errorMsgMissingInvalid . ' [3]';
             } else {
@@ -114,7 +114,7 @@ if (empty($modContext->video)) {
 
 if (empty($modContext->error)) {
     // Video dimensions
-    if ('custom' != $modContext->cmsValueVideoSize) {
+    if ($modContext->cmsValueVideoSize !== 'custom') {
         $dimensions = explode('x', $modContext->cmsValueVideoSize);
     } else {
         $dimensions = array($modContext->cmsValueCustomWidth, $modContext->cmsValueCustomHeight);
@@ -129,27 +129,27 @@ if (empty($modContext->error)) {
     $modContext->height = (int) $dimensions[1];
 
     // Base URL
-    if ('1' == $modContext->cmsValuePrivacyMode) {
+    if ($modContext->cmsValuePrivacyMode === '1') {
         $modContext->src = $modContext->youTubeNoCookieUrl;
     } else {
         $modContext->src = $modContext->youTubeUrl;
     }
 
-    // HTTPS
-    if ('1' == $modContext->cmsValueUseHttps) {
-        $modContext->src = str_replace('http://', 'https://', $modContext->src);
+    // HTTP
+    if ($modContext->cmsValueUseHttp === '1') {
+        $modContext->src = str_replace('https://', 'http://', $modContext->src);
     }
 
     // Video id
     $modContext->src .= $modContext->video;
 
     // Suggested videos
-    if ('1' !== $modContext->cmsValueSuggestedVideos) {
+    if ($modContext->cmsValueSuggestedVideos !== '1') {
         $modContext->urlParams['rel'] = '0';
-//        $modContext->src .= '?rel=0';
     }
 
-    if ('1' !== $modContext->cmsValuePlayerControls) {
+    // Video controls
+    if ($modContext->cmsValuePlayerControls !== '1') {
         $modContext->urlParams['controls'] = '0';
     }
 
@@ -158,28 +158,19 @@ if (empty($modContext->error)) {
     }
 }
 
-
-// #################################################################################################
+// ##############################################
 // OUTPUT
 
-?>
-
-<div class="mpEmbedYouTube">
-    <?php if ($modContext->error) : ?>
-        <?php if (true == $modContext->debug) : ?>
-
-            <p><strong>mpEmbedYouTube error</strong>: <?php echo $modContext->error ?>.</p>
-
-        <?php endif; ?>
-    <?php else : ?>
-
-        <iframe width="<?php echo $modContext->width ?>" height="<?php echo $modContext->height ?>" src="<?php echo $modContext->src ?>" frameborder="0" allowfullscreen></iframe>
-
-    <?php endif; ?>
-
-</div>
-
-<?php
+$tpl = cSmartyFrontend::getInstance();
+$tpl->assign('label', mi18n("LBL_YOUTUBE_VIDEO"));
+$tpl->assign('errorLabel', mi18n("LBL_YOUTUBE_ERROR"));
+$tpl->assign('isBackendEditMode', cRegistry::isBackendEditMode());
+$tpl->assign('error', $modContext->error);
+$tpl->assign('debug', $modContext->debug);
+$tpl->assign('width', $modContext->width);
+$tpl->assign('height', $modContext->height);
+$tpl->assign('src', $modContext->src);
+$tpl->display('get.tpl');
 
 unset($modContext);
 

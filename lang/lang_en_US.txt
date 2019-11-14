@@ -2,10 +2,13 @@
 CUSTOM=Custom
 EMBED_YOUTUBE_VIDEO=Embed YouTube video
 ENABLE_PRIVACY_ENHANCED_MODE=Enable privacy-enhanced mode
+LBL_YOUTUBE_ERROR=mpEmbedYouTube error
+LBL_YOUTUBE_HELP=YouTube-YouTube help - Embed videos & playlists
+LBL_YOUTUBE_VIDEO=YouTube video
 MSG_INVALID_YOUTUBE_VIDEO_URL-=Missing/Invalid YouTube video URL
 RESET_OPTIONS=Reset options
+SHOW_PLAYER_CONTROLS=Show player controls
 SHOW_SUGGESTED_VIDEOS_WHEN_THE_VIDEO_FINISHES=Show suggested videos when the video finishes
-USE_HTTPS=Use HTTPS
+USE_HTTP=Use HTTP (not recommended)
 VIDEO_DIMENSIONS=Video dimensions
 VIDEO_URL=Video URL
-SHOW_PLAYER_CONTROLS=Show player controls
