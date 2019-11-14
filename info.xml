@@ -2,4 +2,4 @@
 <module><name>mp_embed_youtube</name><description>Modul zum Einbinden von YouTube Videos per iframe&#13;
 &#13;
 Autor: Murat Purç, murat@purc.de&#13;
-Version: 0.1</description><type>content</type><alias>mp_embed_youtube</alias></module>
+Version: 0.2.0</description><type>content</type><alias>mp_embed_youtube</alias></module>
