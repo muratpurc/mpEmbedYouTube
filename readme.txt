@@ -1,4 +1,4 @@
-﻿CONTENIDO YouTube Video Modul mpEmbedYouTube 0.1 für CONTENIDO 4.8.x
+﻿CONTENIDO CMS Modul mpEmbedYouTube zum Einbinden von YouTube Videos
 
 ################################################################################
 TOC (Table of contents)
@@ -7,7 +7,7 @@ TOC (Table of contents)
 - INSTALLATION
 - TIPPS & TRICKS
 - CHANGELOG
-- MPEMBEDYOUTUBE MODUL THEMEN IM CONTENIDO FORUM
+- MPEMBEDYOUTUBE MODUL LIMKS
 - SCHLUSSBEMERKUNG
 
 
@@ -18,26 +18,22 @@ Modul zum einfachen Einbinden von YouTube Videos in CONTENIDO per iframe. Das Mo
 iframe Tag zum gewünschten Video, das identisch zur der YouTube eigenen Embed-Methode ist.
 
 Modul-Features:
-- Eingabe von verschiedenen URL-Formaten, 
-  z. B. http://www.youtube.com/watch?v=videoid oder http://youtu.be/videoid
-- Auswahl von vorgegeben Video-Maße oder manuelle Angabe der Maße
+- Eingabe von verschiedenen URL-Formaten,
+  z. B. https://www.youtube.com/watch?v=WxnN05vOuSM oder https://youtu.be/WxnN05vOuSM
+- Auswahl von vorgegeben Video-Maßen oder manuelle Angabe der Maße
 - Option zum Aktivieren/Deaktivieren von Video-Empfehlungen am Ende des Videos
+- Option zur Anzeige der Player Steuerung
 - Ausgabe des iframe auch über https
 - Steuerung des Privatsphäre-Modus (privacy-enhanced mode)
-
 
 
 ################################################################################
 INSTALLATION
 
-Die im Modulpackage enthaltenen Dateien/Sourcen sind wie im Folgenden beschrieben zu installieren:
-
-Der XML-Export (mpEmbedYouTube.xml) des mpEmbedYouTube Moduls, ist &uuml;ber das CONTENIDO-Backend
-als Modul zu importieren.
-
-Nach der Installation das Modul in einem Template einbinden, und im Artikel (welches das Template
-verwendet) konfigurieren.
-
+Den Modulordner "mp_embed_youtube" samt aller Inhalte in das Modulverzeichnis
+des Mandanten "cms/data/modules" kopieren.
+Danach sollte man im Backend die Funktion "Module synchronisieren" unter
+"Style -> Module" ausführen.
 
 
 ################################################################################
@@ -47,10 +43,10 @@ JavaScript-Fehlermeldung:
 -------------------------
 Im Frontend kann folgende JavaScript Fehlermeldung erscheinen:
 
-    "Unsafe JavaScript attempt to access frame with URL {contenido_page_url} from frame with URL 
+    "Unsafe JavaScript attempt to access frame with URL {contenido_page_url} from frame with URL
     {youtube_video_url}. Domains, protocols and ports must match."
 
-Diese Fehlermeldung beeinflusst nicht die Ausgabe in der Seite und ist auch nicht sichbar für normale
+Diese Fehlermeldung beeinflusst nicht die Ausgabe in der Seite und ist auch nicht sichtbar für normale
 Seitenbesucher. Lediglich in der JavaScript-Konsole des Browsers kann man die Fehlermeldung sehen.
 
 Es ist lediglich ein "Warnhinweis" des Browsers, weil vom YouTube Frame aus versucht wurde, auf das
@@ -68,17 +64,15 @@ CHANGELOG
     * Erste Veröffentlichung des mpEmbedYouTube Moduls
 
 
-
 ################################################################################
-MPEMBEDYOUTUBE MODUL THEMEN IM CONTENIDO FORUM
+MPEMBEDYOUTUBE MODUL LIMKS
 
-@todo
-
-
+CONTENIDO Forum unter "CONTENIDO 4.8 -> Module und Plugins":
+https://forum.contenido.org/viewtopic.php?t=32538
 
 ################################################################################
 SCHLUSSBEMERKUNG
 
 Benutzung des Moduls auf eigene Gefahr!
 
-Murat Purc, murat@purc.de
+Murat Purç, murat@purc.de

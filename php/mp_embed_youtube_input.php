@@ -3,14 +3,13 @@
  * Module-Input: mpEmbedYouTube
  *
  * Module to embed YouTube videos in CONTENIDO
- * See http://youtube.com/
+ * See https://youtube.com/
  *
  * @package     CONTENIDO_Modules
  * @subpackage  mpEmbedYouTube
- * @author      Murat Purc <murat@purc.de>
- * @copyright   Copyright (c) 2012 Murat Purc (http://www.purc.de)
+ * @author      Murat Purç <murat@purc.de>
+ * @copyright   Copyright (c) 2012-2019 Murat Purç (http://www.purc.de)
  * @license     http://www.gnu.org/licenses/gpl-2.0.html - GNU General Public License, version 2
- * @version     $Id: $
  */
 
 // #################################################################################################
@@ -83,9 +82,9 @@ $modContext->cmsChkPlayerControls = ("1" == $modContext->cmsValuePlayerControls)
             <?php echo mi18n("VIDEO_URL") ?>:<br>
             <input type="text" class="text_medium" style="width:300px;" name="<?php echo $modContext->cmsVarVideoUrl ?>" value="<?php echo $modContext->cmsValueVideoUrl ?>"><br>
             <small>
-            - http://www.youtube.com/watch?v=6jxsnIRpy2E
-              [<a href="http://www.youtube.com/watch?v=6jxsnIRpy2E" class="blue" target="_blank"> ? </a>]<br>
-            - http://youtu.be/6jxsnIRpy2E
+            - https://www.youtube.com/watch?v=6jxsnIRpy2E
+              [<a href="https://www.youtube.com/watch?v=6jxsnIRpy2E" class="blue" target="_blank"> ? </a>]<br>
+            - https://youtu.be/6jxsnIRpy2E
               [<a href="http://youtu.be/6jxsnIRpy2E" class="blue" target="_blank"> ? </a>]
             </small><br>
             <br>
