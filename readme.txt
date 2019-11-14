@@ -22,7 +22,7 @@ Modul-Features:
 - Auswahl von vorgegeben Video-Maßen oder manuelle Angabe der Maße
 - Option zum Aktivieren/Deaktivieren von Video-Empfehlungen am Ende des Videos
 - Option zur Anzeige der Player Steuerung
-- Ausgabe des iframe auch über http (nicht empfohlem)
+- Ausgabe des iframe auch über http (nicht empfohlen)
 - Steuerung des Privatsphäre-Modus (privacy-enhanced mode)
 
 
