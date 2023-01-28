@@ -1,5 +1,5 @@
 {
-    "name": "purcaholic/mp-embed-youtube",
+    "name": "purc/mp-embed-youtube",
     "type": "contenido-cms-module",
     "description": "YouTube video embed module for CONTENIDO CMS",
     "keywords": [
@@ -9,7 +9,7 @@
         "video",
         "embed"
     ],
-    "homepage": "http://www.purc.de",
+    "homepage": "https://www.purc.de",
     "authors": [
         {
             "name": "Murat Purç",
