@@ -8,7 +8,7 @@
  * @package     CONTENIDO_Modules
  * @subpackage  mpEmbedYouTube
  * @author      Murat Purç <murat@purc.de>
- * @copyright   Copyright (c) 2012-2019 Murat Purç (http://www.purc.de)
+ * @copyright   Murat Purç (https://www.purc.de)
  * @license     http://www.gnu.org/licenses/gpl-2.0.html - GNU General Public License, version 2
  */
 
