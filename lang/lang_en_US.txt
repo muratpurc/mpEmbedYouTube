@@ -2,11 +2,15 @@
 CUSTOM=Custom
 EMBED_YOUTUBE_VIDEO=Embed YouTube video
 ENABLE_PRIVACY_ENHANCED_MODE=Enable privacy-enhanced mode
+LBL_DATA_PROTECTION=Privacy-compliant use of YouTube videos
+LBL_OPTIONS=Options
+LBL_PREVIEW_IMAGE=Preview image
 LBL_YOUTUBE_ERROR=mpEmbedYouTube error
 LBL_YOUTUBE_HELP=YouTube-YouTube help - Embed videos & playlists
 LBL_YOUTUBE_VIDEO=YouTube video
 MSG_INVALID_YOUTUBE_VIDEO_URL-=Missing/Invalid YouTube video URL
-RESET_OPTIONS=Reset options
+MSG_DATA_PROTECTION=A preview image is required for data protection-compliant use of YouTube videos.<br>The preview image can be loaded from YouTube and saved on the server,<br>provided the video provides a preview image (thumbnail) in the desired quality. Alternatively, an image from the upload directory can be selected as a preview image.<br>The actual video is only embedded when you click on the preview image.RESET_OPTIONS=Reset options
+MSG_PREVIEW_IMAGE=If no thumbnail is selected from the upload directory,<br>an attempt is made to download the thumbnail from the YouTube video and place it on the server.
 SHOW_PLAYER_CONTROLS=Show player controls
 SHOW_SUGGESTED_VIDEOS_WHEN_THE_VIDEO_FINISHES=Show suggested videos when the video finishes
 USE_HTTP=Use HTTP (not recommended)

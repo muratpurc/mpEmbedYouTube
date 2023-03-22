@@ -1,193 +1,163 @@
 ?><?php
+
 /**
- * Module-Input: mpEmbedYouTube
+ * Module mp_embed_youtube input.
  *
  * Module to embed YouTube videos in CONTENIDO
  * See https://youtube.com/
  *
- * @package     CONTENIDO_Modules
- * @subpackage  mpEmbedYouTube
- * @author      Murat Purç <murat@purc.de>
- * @copyright   Murat Purç (https://www.purc.dee)
- * @license     http://www.gnu.org/licenses/gpl-2.0.html - GNU General Public License, version 2
+ * @package     Module
+ * @subpackage  mp_embed_youtube
+ * @author      Murat Purç
+ * @copyright   Murat Purç it-solutions
+ * @license     GPL-2.0-or-later
+ * @link        https://www.purc.de
  */
 
-// ##############################################
-// INITIALIZATION
+(function() {
 
-$modContext = new stdClass();
+    // ########################################################################
+    // ########## Initialization/Settings
 
-$modContext->id = uniqid();
+    if (!class_exists(\CONTENIDO\Plugin\MpDevTools\Module\AbstractBase::class)) {
+        new cException('This module requires the plugin "Mp Dev Tools", please download, install and activate it!');
+    }
 
-$modContext->videoSizes = array(
-    '426x240' => '426 x 240',
-    '640x360' => '640 x 360',
-    '854x480' => '854 x 480',
-    '1280x720' => '1280 x 720',
-    '1920x1080' => '1920 x 1080',
-    '2560x1440' => '2560 x 1440',
-    '3840x2160' => '3840 x 2160',
-    'custom' => mi18n("CUSTOM")
-);
+    // Includes
+    if (!class_exists(MpEmbedYoutubeModule::class)) {
+        cInclude('module', 'includes/class.mp.embed.youtube.module.php');
+    }
 
-// ##############################################
-// CMS VARIABLES & LOGIC
+    $module = new MpEmbedYoutubeModule([
+        // (string) Default dimensions
+        'defaultDimensions' => '426x240',
 
-$modContext->cmsValueVideoUrl = "CMS_VALUE[1]";
-$modContext->cmsVarVideoUrl = "CMS_VAR[1]";
+        // (array) List of filer types for the preview image
+        'previewImageFileTypes' => ['png', 'jpg', 'jpeg', 'webp', 'gif', 'tiff'],
 
-$modContext->cmsValueVideoSize = "CMS_VALUE[2]";
-$modContext->cmsVarVideoSize = "CMS_VAR[2]";
+        'i18n' => [
+            'CUSTOM' =>  mi18n("CUSTOM")
+        ],
+    ]);
 
-$modContext->cmsValueCustomWidth = "CMS_VALUE[3]";
-$modContext->cmsVarCustomWidth = "CMS_VAR[3]";
+    // ########################################################################
+    // ########## CMS variables & logic
 
-$modContext->cmsValueCustomHeight = "CMS_VALUE[4]";
-$modContext->cmsVarCustomHeight = "CMS_VAR[4]";
+    $cmsVideoUrl = $module->getCmsToken(1);
+    $cmsVideoSize = $module->getCmsToken(2);
+    $cmsCustomWidth = $module->getCmsToken(3);
+    $cmsCustomHeight = $module->getCmsToken(4);
+    $cmsSuggestedVideos = $module->getCmsToken(5);
+    $cmsUseHttp = $module->getCmsToken(6);
+    $cmsPrivacyMode = $module->getCmsToken(7);
+    $cmsPlayerControls = $module->getCmsToken(8);
+    $cmsProtection = $module->getCmsToken(9);
+    $cmsPreviewImage = $module->getCmsToken(10);
 
-if ($modContext->cmsValueVideoSize !== 'custom') {
-    $modContext->cmsValueCustomWidth = '';
-    $modContext->cmsValueCustomHeight = '';
-}
+    $customWidth = $cmsVideoSize->value === 'custom' ? $cmsCustomWidth->value : '';
+    $customHeight = $cmsVideoSize->value === 'custom' ? $cmsCustomHeight->value : '';
 
-$modContext->cmsValueSuggestedVideos = "CMS_VALUE[5]";
-$modContext->cmsVarSuggestedVideos = "CMS_VAR[5]";
-$modContext->cmsChkSuggestedVideos = ($modContext->cmsValueSuggestedVideos === '1') ? ' checked="checked"' : '';
+    // ########################################################################
+    // ########## Output
 
-$modContext->cmsValueUseHttp = "CMS_VALUE[6]";
-$modContext->cmsVarUseHttps = "CMS_VAR[6]";
-$modContext->cmsChkUseHttps = ($modContext->cmsValueUseHttp === '1') ? ' checked="checked"' : '';
+    $table = $module->getGuiTable(['class' => 'mp_embed_youtube']);
 
-$modContext->cmsValuePrivacyMode = "CMS_VALUE[7]";
-$modContext->cmsVarPrivacyMode = "CMS_VAR[7]";
-$modContext->cmsChkPrivacyMode = ($modContext->cmsValuePrivacyMode === '1') ? ' checked="checked"' : '';
+    // Header row
+    $table->addContrastRow(
+        [mi18n("EMBED_YOUTUBE_VIDEO")], [], [['colspan' => 2]]
+    );
 
-$modContext->cmsValuePlayerControls = "CMS_VALUE[8]";
-$modContext->cmsVarPlayerControls = "CMS_VAR[8]";
-$modContext->cmsChkPlayerControls = ($modContext->cmsValuePlayerControls === '1') ? ' checked="checked"' : '';
+    // Video URL row
+    $input = new cHTMLTextbox($cmsVideoUrl->var, $cmsVideoUrl->value);
+    $input->setClass('mp_embed_youtube_row');
+    $infoBox = new cGuiBackendHelpbox('
+<ul>
+    <li>https://www.youtube.com/watch?v=WxnN05vOuSM [<a href="https://www.youtube.com/watch?v=WxnN05vOuSM" class="blue" target="_blank"> &#128279; </a>]</li>
+    <li>https://youtu.be/WxnN05vOuSM [<a href="https://youtu.be/WxnN05vOuSM" class="blue" target="_blank"> &#128279; </a>]</li>
+</ul>
+    ');
+    $table->addRow(
+        [mi18n("VIDEO_URL"), $input->render() . $infoBox->render()]
+    );
 
-// ##############################################
-// OUTPUT
+    // Video size row
+    $select = new cHTMLSelectElement($cmsVideoSize->var);
+    $select->setClass('mp_embed_youtube_video_size')
+        ->setAttribute('data-type', 'video_size')
+        ->autoFill($module->getVideoSizes())
+        ->setDefault($cmsVideoSize->value);
 
-?>
+    $customSize = new cHTMLDiv();
+    $customSize->setClass('mp_embed_youtube_video_custom_size')
+        ->setAttribute('data-type', 'video_custom_size');
+    $inputWidth = new cHTMLTextbox($cmsCustomWidth->var, $customWidth);
+    $inputWidth->setClass('mp_embed_youtube_video_custom_size_field');
+    $inputHeight = new cHTMLTextbox($cmsCustomHeight->var, $customHeight);
+    $inputHeight->setClass('mp_embed_youtube_video_custom_size_field');
+    $customSize->setContent([$inputWidth, '<span>x</span>', $inputHeight, mi18n("(W_x_H)")]);
 
-<!-- load jQuery if not available -->
-<script>!window.jQuery && document.write(unescape('%3Cscript src="scripts/jquery/jquery.js"%3E%3C/script%3E'))</script>
+    $wrapper = new cHTMLDiv();
+    $wrapper->setClass('mp_embed_youtube_row')
+        ->setContent([$select, $customSize, '<div style="clear:both;"></div>']);
 
-<table cellspacing="0" cellpadding="3" border="0" class="mpEmbedYouTube" id="mpEmbedYouTube_<?php echo $modContext->id ?>">
-    <tr>
-        <td valign="top" class="text_medium_bold"><?php echo mi18n("EMBED_YOUTUBE_VIDEO") ?></td>
-        <td class="text_medium">
-            <!-- video url -->
-            <?php echo mi18n("VIDEO_URL") ?>:<br>
-            <input type="text" class="text_medium" style="width:300px;" name="<?php echo $modContext->cmsVarVideoUrl ?>" value="<?php echo $modContext->cmsValueVideoUrl ?>"><br>
-            <small>
-            - https://www.youtube.com/watch?v=WxnN05vOuSM
-              [<a href="https://www.youtube.com/watch?v=WxnN05vOuSM" class="blue" target="_blank"> ? </a>]<br>
-            - https://youtu.be/WxnN05vOuSM
-              [<a href="https://youtu.be/WxnN05vOuSM" class="blue" target="_blank"> ? </a>]
-            </small><br>
-            <br>
+    $table->addRow(
+        [mi18n("VIDEO_DIMENSIONS"), $wrapper->render()]
+    );
 
-            <!-- video size -->
-            <?php echo mi18n("VIDEO_DIMENSIONS") ?>:
-            <div style="width:350px;">
-                <select name="<?php echo $modContext->cmsVarVideoSize ?>" data-type="video_size" style="float:left;width:150px;margin-right:10px;">
-                <?php
-                foreach ($modContext->videoSizes as $k => $v) {
-                    $sel = ($modContext->cmsValueVideoSize == $k) ? ' selected="selected"' : '';
-                    echo '<option value="' . $k . '"' . $sel . '>' . $v . '</option>' . "\n";
-                }
-                ?>
-                </select>
-                <div data-type="video_custom_size" style="float:left;width:175px;">
-                    <input type="text" class="text_medium" style="width:50px;" name="<?php echo $modContext->cmsVarCustomWidth ?>" value="<?php echo $modContext->cmsValueCustomWidth ?>">
-                    x
-                    <input type="text" class="text_medium" style="width:50px;" name="<?php echo $modContext->cmsVarCustomHeight ?>" value="<?php echo $modContext->cmsValueCustomHeight ?>">
-                    <small><?php echo mi18n("(W_x_H)") ?></small>
-                </div>
-                <div style="clear:both;"></div>
-            </div>
-            <br>
+    // Show suggested videos row
+    $checkbox = new cHTMLCheckbox($cmsSuggestedVideos->var, '1');
+    $checkbox->setLabelText(mi18n("SHOW_SUGGESTED_VIDEOS_WHEN_THE_VIDEO_FINISHES"))
+        ->setChecked($cmsSuggestedVideos->value);
+    $table->addRow([mi18n("LBL_OPTIONS"), $checkbox]);
 
-            <div data-type="options" style="margin-bottom:1.0em;">
-                <!-- show suggested videos -->
-                <label>
-                    <input type="radio" name="<?php echo $modContext->cmsVarSuggestedVideos ?>" value="1"<?php echo $modContext->cmsChkSuggestedVideos ?>>
-                    <?php echo mi18n("SHOW_SUGGESTED_VIDEOS_WHEN_THE_VIDEO_FINISHES") ?>
-                </label><br>
+    // Show player controls row
+    $checkbox = new cHTMLCheckbox($cmsPlayerControls->var, '1');
+    $checkbox->setLabelText(mi18n("SHOW_PLAYER_CONTROLS"))
+        ->setChecked($cmsPlayerControls->value);
+    $table->addRow(['&nbsp;', $checkbox]);
 
-                <!-- show player controls -->
-                <label>
-                    <input type="radio" name="<?php echo $modContext->cmsVarPlayerControls ?>" value="1"<?php echo $modContext->cmsChkPlayerControls ?>>
-                    <?php echo mi18n("SHOW_PLAYER_CONTROLS") ?>
-                </label><br>
+    // Use https row
+    $checkbox = new cHTMLCheckbox($cmsUseHttp->var, '1');
+    $checkbox->setLabelText(mi18n("USE_HTTP"))
+        ->setChecked($cmsUseHttp->value);
+    $table->addRow(['&nbsp;', $checkbox]);
 
-                <!-- enable privacy-enhanced mode -->
-                <label>
-                    <input type="radio" name="<?php echo $modContext->cmsVarPrivacyMode ?>" value="1"<?php echo $modContext->cmsChkPrivacyMode ?>>
-                    <?php echo mi18n("ENABLE_PRIVACY_ENHANCED_MODE") ?>
-                </label><br>
+    // Enable privacy-enhanced mode row
+    $checkbox = new cHTMLCheckbox($cmsPrivacyMode->var, '1');
+    $checkbox->setLabelText(mi18n("ENABLE_PRIVACY_ENHANCED_MODE"))
+        ->setChecked($cmsPrivacyMode->value);
+    $table->addRow(['&nbsp;', $checkbox]);
 
-                <!-- use https -->
-                <label>
-                    <input type="radio" name="<?php echo $modContext->cmsVarUseHttps ?>" value="1"<?php echo $modContext->cmsChkUseHttps ?>>
-                    <?php echo mi18n("USE_HTTP") ?>
-                </label>
-            </div>
+    // Data protection row
+    $infoBox = new cGuiBackendHelpbox(mi18n("MSG_DATA_PROTECTION"));
+    $checkbox = new cHTMLCheckbox($cmsProtection->var, '1');
+    $checkbox->setLabelText(mi18n("LBL_DATA_PROTECTION"))
+        ->setAttribute('data-type', 'data_protection')
+        ->setChecked($cmsProtection->value);
+    $table->addRow(['&nbsp;', $checkbox->render() . $infoBox->render()]);
 
-            <div>
-                <a href="https://support.google.com/youtube/answer/171780" class="blue" target="_blank"><?php echo mi18n("LBL_YOUTUBE_HELP") ?></a>
-            </div>
+    // Preview image row
+    $infoBox = new cGuiBackendHelpbox(mi18n("MSG_PREVIEW_IMAGE"));
+    $uploadSelect = $module->getGuiUploadSelect(
+        $cmsPreviewImage->var, $module->clientId, $module->languageId, ['data-type' => 'preview_image']
+    );
+    $uploadSelect = $uploadSelect->render(
+        '',
+        $cmsPreviewImage->value,
+        ['fileTypes' => $module->previewImageFileTypes, 'directoryIsSelectable' => false]
+    );
+    $table->addRow([
+        '&nbsp;',
+        mi18n("LBL_PREVIEW_IMAGE") . ':<br>' . $uploadSelect . $infoBox->render()
+    ], ['data-type' => 'preview_image_row']);
 
-        </td>
-    </tr>
-</table>
-<script type="text/javascript">
-(function($) {
-    $(document).ready(function() {
-        var $moduleBox, $custom;
+    // YouTube embed help row
+    $link = '<a href="https://support.google.com/youtube/answer/171780" class="blue" target="_blank">' . mi18n("LBL_YOUTUBE_HELP") . '</a>';
+    $table->addRow([$link], [], [['colspan' => 2]]);
 
-        $moduleBox = $('#mpEmbedYouTube_<?php echo $modContext->id ?>');
-        $custom = $moduleBox.find('[data-type="video_custom_size"]');
+    // Output of the module input
+    echo $module->renderModuleInputStyles()
+        . $table->render()
+        . $module->renderModuleInputJavaScript();
 
-        function _toggleCustom(selectedValue) {
-            if ('custom' == selectedValue) {
-                $custom.show();
-            } else {
-                $custom.hide();
-            }
-        }
-
-        function _toggleRadio($input) {
-            if ($input.length) {
-                if ($input.attr('checked')) {
-                    $input.removeAttr('checked');
-                } else {
-                    $input.attr('checked', true);
-                }
-            }
-        }
-
-        // on video size select change
-        $moduleBox.find('[data-type="video_size"]').change(function(e) {
-            var value = $(this).find("option:selected").attr("value");
-            _toggleCustom(value);
-        });
-
-        // toggle radios on click
-        $moduleBox.find('[data-type="options"] label').click(function(e) {
-            var $input = $(this).find('input[type="radio"]');
-            _toggleRadio($input);
-            return false;
-        });
-
-        // initial custom sizes state
-        _toggleCustom('<?php echo $modContext->cmsValueVideoSize ?>');
-    });
-})(jQuery);
-</script>
-
-<?php
-
-unset($modContext);
+})();

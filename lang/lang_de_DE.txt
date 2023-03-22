@@ -2,10 +2,15 @@
 CUSTOM=Benutzerdefiniert
 EMBED_YOUTUBE_VIDEO=YouTube Video einbetten
 ENABLE_PRIVACY_ENHANCED_MODE=Erweiterten Datenschutzmodus aktivieren
+LBL_DATA_PROTECTION=Datenschutzkonforme Nutzung von YouTube Videos
+LBL_OPTIONS=Optionen
+LBL_PREVIEW_IMAGE=Vorschaubild
 LBL_YOUTUBE_ERROR=mpEmbedYouTube Fehler
 LBL_YOUTUBE_HELP=YouTube-Hilfe - Videos und Playlists einbetten
 LBL_YOUTUBE_VIDEO=YouTube Video
 MSG_INVALID_YOUTUBE_VIDEO_URL-=Fehlende/Ungültige YouTube Video URL
+MSG_DATA_PROTECTION=Für eine datenschutzkonforme Nutzung von YouTube Videos wird ein Vorschaubild benötigt.<br>Das Vorschaubild kann von YouTube geladen und auf dem Server gespeichert werden,<br>sofern das Video ein Vorschaubild (Thumbnail) in der gewünschten Qualität zur Verfügung stellt. Alternativ kann ein Bild aus dem Upload-Verzeichnis als Vorschaubild gewählt werden.<br>Erst bei Klick auf das Vorschaubild wird das eigentliche Video eingebettet.
+MSG_PREVIEW_IMAGE=Wenn kein Vorschaubild aus dem Upload-Verzeichnis gewählt wurde,<br>wird versucht, das Vorschaubild vom YouTube-Video herunterzuladen und auf dem Server abzulegen.
 RESET_OPTIONS=Optionen zurücksetzen
 SHOW_PLAYER_CONTROLS=Player Steuerung anzeigen
 SHOW_SUGGESTED_VIDEOS_WHEN_THE_VIDEO_FINISHES=Videovorschläge zeigen, nachdem das Video beendet wurde

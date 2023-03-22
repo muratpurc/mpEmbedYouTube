@@ -13,12 +13,15 @@
     "authors": [
         {
             "name": "Murat Purç",
-            "email": "murat@purc.de",
             "role": "Developer"
         }
     ],
     "license": ["GPL-2.0-or-later"],
     "require-dev": {
         "phpcompatibility/php-compatibility": "^9.3"
+    },
+    "require": {
+        "php": ">=7.0.0",
+        "ext-curl": "*"
     }
 }

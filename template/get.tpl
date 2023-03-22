@@ -6,7 +6,7 @@
 
 {/if}
 
-<div class="mpEmbedYouTube">
+<div class="mp_embed_youtube">
 
     {if 0 lt $error|strlen}
         {if $debug}
@@ -16,7 +16,11 @@
         {/if}
     {else}
 
+        <div data-action-widget="mp_embed_youtube" data-width="{$width}" data-height="{$height}" data-src="{$src}" data-protection="{$protection}" data-preview-image="{$previewImage}"></div>
+
+        <!--
         <iframe width="{$width}" height="{$height}" src="{$src}" frameborder="0" allowfullscreen></iframe>
+        -->
 
     {/if}
 
