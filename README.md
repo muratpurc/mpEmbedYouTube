@@ -45,14 +45,15 @@ Danach sollte man im Backend die Funktion "Module synchronisieren" unter
 
 **2023-03-22 mpEmbedYouTube Modul 0.3.0 (für CONTENIDO 4.10.x)**
 - change: Überarbeiten des Modulcodes, Verwendung des Plugins "Mp Dev Tools"
-- new: Datenschutzkonformes Einbinden von YouTube Videos.
-- new: Auswahl eines Vorschaubildes oder Download des Vorschaubildes von YouTube auf den Server.
+- new: Datenschutzkonformes Einbinden von YouTube Videos
+- new: Auswahl eines Vorschaubildes oder Download des Vorschaubildes von YouTube
+  auf den Server
 
 **2019-11-14 mpEmbedYouTube Modul 0.2.0 (für CONTENIDO 4.9.x - 4.10.x)**
 - change: Überarbeiten des Modulcodes, portieren in CONTENIDO >= 4.9.x
 - change: Verwendung aktuellerer Video-Maße
-- change: Per defeault HTTPS Urls verwenden
-- new:    Option zur Anzeige der Player Steuerung
+- change: Per Default HTTPS Urls verwenden
+- new: Option zur Anzeige der Player Steuerung
 
 **2012-12-08 mpEmbedYouTube Modul 0.1**
 - Erste Veröffentlichung des mpEmbedYouTube Moduls
