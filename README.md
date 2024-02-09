@@ -23,7 +23,7 @@ Modul-Features:
 ## Voraussetzungen
 
 - CONTENIDO >= 4.10.*
-- PHP >= 7.0 und PHP < 8.2
+- PHP >= 7.1 und PHP < 8.2
 - PHP cURL-Erweiterung für den Download von Vorschaubildern von YouTube
 - CONTENIDO Plugin "Mp Dev Tools" >= 0.1.0
 
