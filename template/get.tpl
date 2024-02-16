@@ -8,7 +8,7 @@
 
 <div class="mp_embed_youtube">
 
-    {if 0 lt $error|strlen}
+    {if 0 lt $error|count_characters}
         {if $debug}
 
             <p><strong>{$errorLabel|escape}</strong>: {$error|escape}.</p>
