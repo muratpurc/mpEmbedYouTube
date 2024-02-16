@@ -29,6 +29,9 @@
     }
 
     $module = new MpEmbedYoutubeModule([
+        // (bool) Flag to display error message if an error occurs
+        'debug' => false,
+
         // (string) Default dimensions
         'defaultDimensions' => '426x240',
 
